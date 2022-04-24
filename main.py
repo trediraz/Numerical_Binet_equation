@@ -33,8 +33,8 @@ fig, ax = plt.subplots(2, 2, subplot_kw={'projection': 'polar'})
 fig.set_figwidth(10)
 fig.set_figheight(10)
 
-max_r = 10
-semi_latus_rectum = 3
+max_r = 50
+semi_latus_rectum = 6
 r_0 = 2
 
 boundary_con = np.zeros(shape=(1, 2))
@@ -49,9 +49,13 @@ theta, r = set_up_analytical_graph()
 ax[0, 0].set_title("Rozwiązanie analityczne")
 ax[0, 0].plot(theta, r, 'k')
 
+nm.wave_equation(lambda x: np.sin(x), 2, 3, 0.1, 5, 5)
+
 for i in range(len(h)):
-    e = nm.euler_method(boundary_con, f, h[i], n, lambda x: x <= 0)
-    r = 1 / e[:, 0]
+#    u = nm.euler_method(boundary_con, f, h[i], n, lambda x: x <= 0)
+    u = nm.finite_difference_second_order(1, 0, 1, 1/semi_latus_rectum, 0, 1/r_0, 0, h[i], n, lambda x: x <= 0)
+#    r = 1 / u[:, 0]
+    r = 1/u
     ni = len(r)
     theta_num = np.arange(0, ni * h[i], h[i])
     ax[int((i+1)/2), (i+1) % 2].plot(theta_num, r)
