@@ -35,20 +35,3 @@ def get_func_val(f, x):
         return f(x)
     else:
         return f
-
-
-def wave_equation(f, g, c, max_h, n_t, n_h):
-    tau = max_h
-    h = c/tau
-    while h >= max_h:
-        tau /= 10
-        h /= 10
-    y = np.zeros(shape=(n_h, n_t))
-    for i in range(2, n_h):
-        y[0, i] = get_func_val(f, h*(i-1)) - h*get_func_val(g, h*(i-1))
-        y[1, i] = get_func_val(f, h*(i-1))
-
-    for j in range(2, n_t):
-        for i in range(2, n_h):
-            y[i, j-1] = y[i-1, j-2] + y[i-1, j] - y[i-2, j-1]
-    return y

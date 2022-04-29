@@ -16,12 +16,12 @@ def f_u(j, arr):
     return arr[j][1]
 
 
-def set_up_analytical_graph():
+def get_analytical_solution():
     e = (semi_latus_rectum - r_0) / r_0
     if e == 1:
         limit = 2 * np.pi
     elif e > 1:
-        limit = np.pi - np.arccos(r_0 / (semi_latus_rectum - r_0)) if semi_latus_rectum != r_0 else 4 * np.pi
+        limit = np.pi - np.arccos(r_0 / (semi_latus_rectum - r_0))
     else:
         limit = 4 * np.pi
     theta = np.arange(0, limit, 0.00001)
@@ -44,12 +44,12 @@ boundary_con[0][1] = 0
 h = [0.1, 0.01, 0.001]
 n = 10000
 
-theta, r = set_up_analytical_graph()
+theta, r = get_analytical_solution()
 
 ax[0, 0].set_title("Rozwiązanie analityczne")
 ax[0, 0].plot(theta, r, 'k')
 
-nm.wave_equation(lambda x: np.sin(x), 2, 3, 0.1, 5, 5)
+
 
 for i in range(len(h)):
 #    u = nm.euler_method(boundary_con, f, h[i], n, lambda x: x <= 0)
